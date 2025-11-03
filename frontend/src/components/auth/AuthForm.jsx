@@ -1,29 +1,91 @@
 import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const AuthForm = () => {
   const [isLogin, setIsLogin] = useState(true);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const navigate = useNavigate(); // ✅ For navigation
+
   const toggleForm = () => setIsLogin(!isLogin);
 
+  // Handle input changes
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  // Handle form submit
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const url = isLogin
+        ? "http://localhost:4000/auth/login"
+        : "http://localhost:4000/auth/register";
+
+      // Check password confirmation for signup
+      if (!isLogin && formData.password !== formData.confirmPassword) {
+        alert("Passwords do not match!");
+        return;
+      }
+
+      const payload = isLogin
+        ? { email: formData.email, password: formData.password }
+        : {
+            name: formData.name,
+            email: formData.email,
+            password: formData.password,
+          };
+
+      const res = await axios.post(url, payload);
+
+      if (res.data.token) {
+        localStorage.setItem("token", res.data.token);
+        alert("✅ Success!");
+        navigate("/HomePage"); // ✅ Redirect to HomePage
+      } else {
+        alert(res.data.message || "Something went wrong!");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("❌ Error: " + (err.response?.data?.message || "Server error"));
+    }
+  };
+
   return (
-    <div className="flex flex-col md:flex-row gap-10">
+    <div className="flex flex-col md:flex-row gap-10 justify-center items-center min-h-screen bg-gray-50">
       {/* Login Card */}
       {isLogin && (
         <div className="bg-white p-10 rounded-2xl shadow-md w-80">
           <h2 className="text-3xl font-bold text-[#AF6FBF] mb-6">Login</h2>
           <input
             type="email"
+            name="email"
             placeholder="Enter Your Email"
+            value={formData.email}
+            onChange={handleChange}
             className="w-full mb-4 px-4 py-2 bg-[#FAE6FF] rounded-md outline-none"
           />
           <input
             type="password"
+            name="password"
             placeholder="Enter Your Password"
+            value={formData.password}
+            onChange={handleChange}
             className="w-full mb-2 px-4 py-2 bg-[#FAE6FF] rounded-md outline-none"
           />
           <p className="text-sm text-gray-400 text-right mb-4 cursor-pointer">
             Forgot Your Password?
           </p>
-          <button className="w-full py-2 bg-[#AF6FBF] text-white font-semibold rounded-md hover:opacity-90">
+          <button
+            onClick={handleSubmit}
+            className="w-full py-2 bg-[#AF6FBF] text-white font-semibold rounded-md hover:opacity-90"
+          >
             Login
           </button>
 
@@ -59,25 +121,40 @@ const AuthForm = () => {
           <h2 className="text-3xl font-bold text-[#AF6FBF] mb-6">Sign Up</h2>
           <input
             type="text"
+            name="name"
             placeholder="Enter Your Name"
+            value={formData.name}
+            onChange={handleChange}
             className="w-full mb-4 px-4 py-2 bg-[#FAE6FF] rounded-md outline-none"
           />
           <input
             type="email"
+            name="email"
             placeholder="Enter Your Email"
+            value={formData.email}
+            onChange={handleChange}
             className="w-full mb-4 px-4 py-2 bg-[#FAE6FF] rounded-md outline-none"
           />
           <input
             type="password"
+            name="password"
             placeholder="Enter Your Password"
+            value={formData.password}
+            onChange={handleChange}
             className="w-full mb-4 px-4 py-2 bg-[#FAE6FF] rounded-md outline-none"
           />
           <input
             type="password"
+            name="confirmPassword"
             placeholder="Confirm Your Password"
+            value={formData.confirmPassword}
+            onChange={handleChange}
             className="w-full mb-4 px-4 py-2 bg-[#FAE6FF] rounded-md outline-none"
           />
-          <button className="w-full py-2 bg-[#AF6FBF] text-white font-semibold rounded-md hover:opacity-90">
+          <button
+            onClick={handleSubmit}
+            className="w-full py-2 bg-[#AF6FBF] text-white font-semibold rounded-md hover:opacity-90"
+          >
             Sign Up
           </button>
 
