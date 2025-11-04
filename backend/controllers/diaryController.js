@@ -15,7 +15,7 @@ export const createDiary = async (req, res) => {
   }
 };
 
-// Get all diaries for logged-in user
+// Get diaries 
 export const getDiaries = async (req, res) => {
   try {
     const diaries = await Diary.find({ user: req.user.id }).sort({

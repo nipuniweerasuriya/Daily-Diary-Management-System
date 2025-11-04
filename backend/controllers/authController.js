@@ -12,7 +12,6 @@ export const registerUser = async (req, res) => {
     const newUser = new User({ name, email, password: hashedPassword });
     await newUser.save();
 
-    // Create JWT token and return the user (without password)
     const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, { expiresIn: "7d" });
 
     const userResponse = {
@@ -40,7 +39,6 @@ export const loginUser = async (req, res) => {
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "7d" });
 
-    // don't send the password back
     const userResponse = {
       _id: user._id,
       name: user.name,

@@ -6,10 +6,10 @@ import { FaArrowRight } from "react-icons/fa";
 const AboutPage = () => {
   return (
     <div className="flex flex-col min-h-screen bg-[#FAE6FF]">
-      {/* Header */}
+      
       <Header />
 
-      {/* Main Content */}
+      
       <main className="flex-grow flex flex-col justify-center items-center px-4 py-8">
         <div className="bg-white rounded-3xl shadow-md p-6 sm:p-10 w-full max-w-3xl text-center">
           <div className="flex justify-between items-center mb-6">
@@ -33,7 +33,7 @@ const AboutPage = () => {
         </div>
       </main>
 
-      {/* Footer */}
+      
       <Footer />
     </div>
   );

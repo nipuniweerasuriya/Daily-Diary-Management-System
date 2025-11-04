@@ -1,11 +1,11 @@
 import React from "react";
 import Button from "../../components/main/Button";
-import { useNavigate } from "react-router-dom"; // ✅ import navigation
+import { useNavigate } from "react-router-dom"; 
 
 const WelcomePage = () => {
   const navigate = useNavigate();
 
-  // ✅ optional: send info to show login or signup form
+  
   const goToLogin = () => navigate("/AuthPage", { state: { showLogin: true } });
   const goToSignUp = () => navigate("/AuthPage", { state: { showLogin: false } });
 

@@ -9,7 +9,6 @@ export const connectDB = async () => {
       process.exit(1);
     }
 
-    // Mask credentials when logging for privacy
     const maskedUri = mongoUri.replace(/:\/\/.+?:.+?@/, '://***:***@');
     console.log(`🔍 Connecting to MongoDB: ${maskedUri}`);
 
@@ -17,9 +16,9 @@ export const connectDB = async () => {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
-    console.log("✅ MongoDB connected successfully");
+    console.log("MongoDB connected successfully");
   } catch (error) {
-    console.error("❌ MongoDB connection failed:", error.message);
+    console.error("MongoDB connection failed:", error.message);
     process.exit(1);
   }
 };

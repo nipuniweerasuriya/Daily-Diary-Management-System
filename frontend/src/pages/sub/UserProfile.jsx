@@ -6,10 +6,10 @@ import { FaUser } from "react-icons/fa";
 const UserProfile = () => {
   return (
     <div className="flex flex-col min-h-screen bg-[#FAE6FF]">
-      {/* Header */}
+      
       <Header />
 
-      {/* Main Content */}
+      
       <main className="flex-grow flex flex-col justify-center items-center px-4 py-8">
         <div className="bg-white rounded-3xl shadow-md p-6 sm:p-10 w-full max-w-xs text-center">
           <h1 className="text-[#AF6FBF] font-extrabold text-lg mb-4">
@@ -31,7 +31,7 @@ const UserProfile = () => {
         </div>
       </main>
 
-      {/* Footer */}
+    
       <Footer />
     </div>
   );

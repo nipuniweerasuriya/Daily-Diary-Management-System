@@ -104,7 +104,7 @@ const HomePage = () => {
 
       <main className="flex-grow px-6 py-10 relative">
         <div className="max-w-7xl mx-auto">
-          {/* Title and Add button */}
+          
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
             <h1 className="text-4xl font-extrabold text-[#A76BCF] mb-4 sm:mb-0">
               My Diary Entries
@@ -117,7 +117,7 @@ const HomePage = () => {
             </button>
           </div>
 
-          {/* Diary Cards Grid */}
+          
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {diaries.length === 0 ? (
               <p className="text-gray-500 text-center col-span-full">
@@ -129,7 +129,7 @@ const HomePage = () => {
                   key={d._id}
                   className="bg-white/90 rounded-3xl border border-[#E6CFF5] shadow-lg hover:shadow-2xl transition-all p-6 flex flex-col justify-between h-[280px]"
                 >
-                  {/* Date & Mood */}
+                  
                   <div className="flex justify-between items-center mb-3">
                     <p className="text-sm text-[#8F4EB2] font-semibold">
                       📅 {formatDate(d.date)}
@@ -139,7 +139,7 @@ const HomePage = () => {
                     </span>
                   </div>
 
-                  {/* Title & Content */}
+                  
                   <div>
                     <h3 className="text-xl font-bold text-[#A76BCF] mb-2 truncate">
                       {d.title}
@@ -149,7 +149,7 @@ const HomePage = () => {
                     </p>
                   </div>
 
-                  {/* Buttons */}
+                
                   <div className="flex justify-end gap-4 mt-4 pt-3 border-t border-[#E6CFF5]">
                     <button
                       onClick={() => {
@@ -179,7 +179,7 @@ const HomePage = () => {
           </div>
         </div>
 
-        {/* Popup Modal */}
+    
         {showModal && (
           <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50">
             <div className="bg-white rounded-2xl shadow-2xl w-[90%] max-w-lg p-6 relative animate-fadeIn">

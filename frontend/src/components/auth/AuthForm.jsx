@@ -11,16 +11,16 @@ const AuthForm = () => {
     confirmPassword: "",
   });
 
-  const navigate = useNavigate(); // ✅ For navigation
+  const navigate = useNavigate();
 
   const toggleForm = () => setIsLogin(!isLogin);
 
-  // Handle input changes
+  
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Handle form submit
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -28,7 +28,7 @@ const AuthForm = () => {
         ? "http://localhost:4000/auth/login"
         : "http://localhost:4000/auth/register";
 
-      // Check password confirmation for signup
+      
       if (!isLogin && formData.password !== formData.confirmPassword) {
         alert("Passwords do not match!");
         return;
@@ -45,25 +45,25 @@ const AuthForm = () => {
       const res = await axios.post(url, payload);
 
       if (res.data.token) {
-        // store token and set default Authorization header for axios
+        
         localStorage.setItem("token", res.data.token);
         axios.defaults.headers.common[
           "Authorization"
         ] = `Bearer ${res.data.token}`;
-        alert("✅ Success!");
-        navigate("/HomePage"); // ✅ Redirect to HomePage
+        alert("Success!");
+        navigate("/HomePage");
       } else {
         alert(res.data.message || "Something went wrong!");
       }
     } catch (err) {
       console.error(err);
-      alert("❌ Error: " + (err.response?.data?.message || "Server error"));
+      alert("Error: " + (err.response?.data?.message || "Server error"));
     }
   };
 
   return (
     <div className="flex flex-col md:flex-row gap-10 justify-center items-center min-h-screen bg-gray-50">
-      {/* Login Card */}
+      {/* Login */}
       {isLogin && (
         <form
           onSubmit={handleSubmit}
@@ -129,7 +129,7 @@ const AuthForm = () => {
         </form>
       )}
 
-      {/* Sign Up Card */}
+      {/* Sign Up */}
       {!isLogin && (
         <form
           onSubmit={handleSubmit}
