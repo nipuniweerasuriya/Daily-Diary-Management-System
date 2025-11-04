@@ -1,7 +1,14 @@
 import React from "react";
-import Button from "../../components/main/Botton";
+import Button from "../../components/main/Button";
+import { useNavigate } from "react-router-dom"; // ✅ import navigation
 
 const WelcomePage = () => {
+  const navigate = useNavigate();
+
+  // ✅ optional: send info to show login or signup form
+  const goToLogin = () => navigate("/AuthPage", { state: { showLogin: true } });
+  const goToSignUp = () => navigate("/AuthPage", { state: { showLogin: false } });
+
   return (
     <div className="min-h-screen flex justify-center items-center bg-gray-50">
       <div className="bg-white p-8 rounded-2xl shadow-md w-80 sm:w-96 text-center">
@@ -20,8 +27,8 @@ const WelcomePage = () => {
         </p>
 
         <div className="flex flex-col gap-4">
-          <Button text="Login" />
-          <Button text="Sign Up" />
+          <Button text="Login" onClick={goToLogin} />
+          <Button text="Sign Up" onClick={goToSignUp} />
         </div>
       </div>
     </div>

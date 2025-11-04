@@ -45,7 +45,11 @@ const AuthForm = () => {
       const res = await axios.post(url, payload);
 
       if (res.data.token) {
+        // store token and set default Authorization header for axios
         localStorage.setItem("token", res.data.token);
+        axios.defaults.headers.common[
+          "Authorization"
+        ] = `Bearer ${res.data.token}`;
         alert("✅ Success!");
         navigate("/HomePage"); // ✅ Redirect to HomePage
       } else {
@@ -61,7 +65,10 @@ const AuthForm = () => {
     <div className="flex flex-col md:flex-row gap-10 justify-center items-center min-h-screen bg-gray-50">
       {/* Login Card */}
       {isLogin && (
-        <div className="bg-white p-10 rounded-2xl shadow-md w-80">
+        <form
+          onSubmit={handleSubmit}
+          className="bg-white p-10 rounded-2xl shadow-md w-80"
+        >
           <h2 className="text-3xl font-bold text-[#AF6FBF] mb-6">Login</h2>
           <input
             type="email"
@@ -70,6 +77,7 @@ const AuthForm = () => {
             value={formData.email}
             onChange={handleChange}
             className="w-full mb-4 px-4 py-2 bg-[#FAE6FF] rounded-md outline-none"
+            required
           />
           <input
             type="password"
@@ -78,13 +86,14 @@ const AuthForm = () => {
             value={formData.password}
             onChange={handleChange}
             className="w-full mb-2 px-4 py-2 bg-[#FAE6FF] rounded-md outline-none"
+            required
           />
           <p className="text-sm text-gray-400 text-right mb-4 cursor-pointer">
             Forgot Your Password?
           </p>
           <button
-            onClick={handleSubmit}
-            className="w-full py-2 bg-[#AF6FBF] text-white font-semibold rounded-md hover:opacity-90"
+            type="submit"
+            className="w-full py-2 bg-[#AF6FBF] text-white font-semibold rounded-md hover:opacity-90 cursor-pointer"
           >
             Login
           </button>
@@ -108,16 +117,24 @@ const AuthForm = () => {
             <span
               onClick={toggleForm}
               className="text-black font-medium cursor-pointer"
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") toggleForm();
+              }}
             >
               Register
             </span>
           </p>
-        </div>
+        </form>
       )}
 
       {/* Sign Up Card */}
       {!isLogin && (
-        <div className="bg-white p-10 rounded-2xl shadow-md w-80">
+        <form
+          onSubmit={handleSubmit}
+          className="bg-white p-10 rounded-2xl shadow-md w-80"
+        >
           <h2 className="text-3xl font-bold text-[#AF6FBF] mb-6">Sign Up</h2>
           <input
             type="text"
@@ -126,6 +143,7 @@ const AuthForm = () => {
             value={formData.name}
             onChange={handleChange}
             className="w-full mb-4 px-4 py-2 bg-[#FAE6FF] rounded-md outline-none"
+            required
           />
           <input
             type="email"
@@ -134,6 +152,7 @@ const AuthForm = () => {
             value={formData.email}
             onChange={handleChange}
             className="w-full mb-4 px-4 py-2 bg-[#FAE6FF] rounded-md outline-none"
+            required
           />
           <input
             type="password"
@@ -142,6 +161,7 @@ const AuthForm = () => {
             value={formData.password}
             onChange={handleChange}
             className="w-full mb-4 px-4 py-2 bg-[#FAE6FF] rounded-md outline-none"
+            required
           />
           <input
             type="password"
@@ -150,10 +170,11 @@ const AuthForm = () => {
             value={formData.confirmPassword}
             onChange={handleChange}
             className="w-full mb-4 px-4 py-2 bg-[#FAE6FF] rounded-md outline-none"
+            required
           />
           <button
-            onClick={handleSubmit}
-            className="w-full py-2 bg-[#AF6FBF] text-white font-semibold rounded-md hover:opacity-90"
+            type="submit"
+            className="w-full py-2 bg-[#AF6FBF] text-white font-semibold rounded-md hover:opacity-90 cursor-pointer"
           >
             Sign Up
           </button>
@@ -177,11 +198,16 @@ const AuthForm = () => {
             <span
               onClick={toggleForm}
               className="text-black font-medium cursor-pointer"
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") toggleForm();
+              }}
             >
               Login
             </span>
           </p>
-        </div>
+        </form>
       )}
     </div>
   );

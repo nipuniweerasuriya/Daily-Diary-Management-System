@@ -12,7 +12,18 @@ export const registerUser = async (req, res) => {
     const newUser = new User({ name, email, password: hashedPassword });
     await newUser.save();
 
-    res.json({ message: "User Registered Successfully" });
+    // Create JWT token and return the user (without password)
+    const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, { expiresIn: "7d" });
+
+    const userResponse = {
+      _id: newUser._id,
+      name: newUser.name,
+      email: newUser.email,
+      profileImage: newUser.profileImage || null,
+      createdAt: newUser.createdAt,
+    };
+
+    res.json({ message: "User Registered Successfully", token, user: userResponse });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -28,7 +39,17 @@ export const loginUser = async (req, res) => {
     if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "7d" });
-    res.json({ token, user });
+
+    // don't send the password back
+    const userResponse = {
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      profileImage: user.profileImage || null,
+      createdAt: user.createdAt,
+    };
+
+    res.json({ token, user: userResponse });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

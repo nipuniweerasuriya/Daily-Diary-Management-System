@@ -3,7 +3,17 @@ import mongoose from "mongoose";
 
 export const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_URI, {
+    const mongoUri = process.env.MONGO_URI;
+    if (!mongoUri) {
+      console.error("MONGO_URI is not set. Check your backend/.env or process environment.");
+      process.exit(1);
+    }
+
+    // Mask credentials when logging for privacy
+    const maskedUri = mongoUri.replace(/:\/\/.+?:.+?@/, '://***:***@');
+    console.log(`🔍 Connecting to MongoDB: ${maskedUri}`);
+
+    await mongoose.connect(mongoUri, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
